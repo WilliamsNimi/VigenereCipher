@@ -1,6 +1,6 @@
 package vigenere;
 
-public class encryption extends VigenereCipher{
+public class encryption extends VigenereCipherInterface{
 
     public String encrypt(String text, String key)
     {
