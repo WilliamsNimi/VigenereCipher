@@ -16,14 +16,16 @@ public class VigenereCipherInterface extends JFrame {
     public static JTextArea plainText;
     public static JTextArea encryptedTextArea;
     public static int width = 500, height = 700;
-    public static Button decrypt, encrypt;
+    public static Button decrypt, encrypt, sendMail;
     Container container;
     GridBagConstraints object;
     encryptButtonHandler eButtonHandler;
     decryptButtonHandler dButtonHandler;
+    EmailHandler mailButtonHandler;
     
 
-    static encryption newCipher = new encryption();
+    static Encryption newCipher = new Encryption();
+    static VigenereCipherInterface UI = new VigenereCipherInterface();
     
     public VigenereCipherInterface ()
     {
@@ -83,9 +85,15 @@ public class VigenereCipherInterface extends JFrame {
         encryptedTextArea.setColumns(20);
         encryptedTextArea.setLineWrap(true);
         
+        sendMail = new Button("Send Email");
+        object.gridx = 2;
+        object.gridy = 5;
+        mailButtonHandler = new EmailHandler();
+        sendMail.addActionListener(mailButtonHandler);
+        container.add(sendMail, object);
+        
         setTitle("Vigenere Cipher");
         setSize(width,height);
-        setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(true);
     }
@@ -114,8 +122,20 @@ public class VigenereCipherInterface extends JFrame {
         }
     }
     
+    public class EmailHandler implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Email newEmail = new Email();
+            newEmail.messageContent =  encryptedTextArea.getText();
+            newEmail.setVisible(true);
+            UI.dispose();
+        }
+        
+    }
     public static void main(String[] args) {
-        VigenereCipherInterface obj = new VigenereCipherInterface();
+        
+        UI.setVisible(true);
 
      }
 }
